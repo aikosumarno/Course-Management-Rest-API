@@ -1,0 +1,666 @@
+/* BEGIN AI-GENERATED CODE: AI was used to help simplify and clean up the frontend styling while preserving existing functionality. */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f5f6f8;
+  color: #222;
+}
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 300px;
+  background: #ffffff;
+  border-right: 1px solid #ddd;
+}
+
+.sidebar-header {
+  padding: 16px;
+  border-bottom: 1px solid #ddd;
+}
+
+.logo-title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.logo-mark {
+  display: none;
+}
+
+.panel {
+  padding: 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.panel-title {
+  margin: 0 0 12px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.upload-zone {
+  position: relative;
+  border: 1px dashed #aaa;
+  border-radius: 6px;
+  padding: 14px;
+  text-align: center;
+  background: #fafafa;
+}
+
+.upload-zone.dragover,
+.upload-zone.has-file {
+  background: #f0f5ff;
+  border-color: #4a73d9;
+}
+
+.upload-zone input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.upload-icon {
+  display: none;
+}
+
+.upload-label {
+  font-size: 14px;
+}
+
+.upload-sub {
+  margin-top: 4px;
+  color: #666;
+  font-size: 12px;
+}
+
+.upload-filename {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #1f4fbf;
+  word-break: break-word;
+}
+
+.btn-primary,
+.btn-ghost,
+.page-btn {
+  margin-top: 10px;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.btn-primary {
+  width: 100%;
+  border: 1px solid #3367d6;
+  background: #3367d6;
+  color: #fff;
+}
+
+.btn-primary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn-ghost {
+  width: 100%;
+  border: 1px solid #bbb;
+  background: #fff;
+  color: #333;
+}
+
+.status-box {
+  margin-top: 12px;
+  border: 1px solid #ddd;
+  background: #fff;
+  padding: 10px;
+  border-radius: 4px;
+  display: flex;
+  /* make container flex for alignment */
+  flex-direction: column;
+  /* stack children vertically */
+  gap: 8px;
+  /* space between rows */
+}
+
+.status-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #999;
+}
+
+.status-dot.processing {
+  background: #2a7de1;
+}
+
+.status-dot.completed {
+  background: #2e8b57;
+}
+
+.status-dot.failed {
+  background: #c53929;
+}
+
+.status-label {
+  font-weight: 600;
+}
+
+.status-label.processing {
+  color: #2a7de1;
+}
+
+.status-label.completed {
+  color: #2e8b57;
+}
+
+.status-label.failed {
+  color: #c53929;
+}
+
+.status-detail {
+  margin-top: 6px;
+  font-size: 13px;
+  color: #555;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.stat-card {
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  background: #fafafa;
+  padding: 8px;
+}
+
+.stat-value {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.stat-name {
+  font-size: 12px;
+  color: #666;
+}
+
+.field-group {
+  margin-bottom: 12px;
+}
+
+.field-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.field-input {
+  width: 100%;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  padding: 7px 8px;
+  font-size: 14px;
+  background: #fff;
+}
+
+.dept-select {
+  min-height: 120px;
+}
+
+.dept-hint {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #666;
+}
+
+.range-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.range-sep {
+  color: #666;
+}
+
+.year-input {
+  width: 100%;
+}
+
+.main {
+  flex: 1;
+  padding: 20px;
+}
+
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+
+.main-title {
+  margin: 0;
+  font-size: 24px;
+}
+
+.result-count,
+.sort-info {
+  color: #555;
+  font-size: 14px;
+}
+
+.empty-state,
+.loading-state {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fff;
+  padding: 24px;
+  text-align: center;
+}
+
+.empty-icon {
+  display: none;
+}
+
+.empty-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.empty-sub,
+.loading-text {
+  color: #666;
+}
+
+.spinner {
+  width: 26px;
+  height: 26px;
+  border: 3px solid #ddd;
+  border-top-color: #3367d6;
+  border-radius: 50%;
+  margin: 0 auto 10px;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.table-wrap {
+  border: 1px solid #ddd;
+  background: #fff;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td {
+  text-align: left;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+.data-table th {
+  background: #f3f4f6;
+  font-weight: 700;
+}
+
+th.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+th.active-sort {
+  color: #1f4fbf;
+}
+
+.sort-arrow {
+  margin-left: 4px;
+}
+
+.tag {
+  display: inline-block;
+  padding: 2px 6px;
+  background: #eef3ff;
+  border: 1px solid #d9e4ff;
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+.avg-cell {
+  font-weight: 600;
+}
+
+.avg-hi {
+  color: #1f7a1f;
+}
+
+.avg-mid {
+  color: #926800;
+}
+
+.avg-lo {
+  color: #a33;
+}
+
+.no-value {
+  color: #888;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.page-btn {
+  border: 1px solid #bbb;
+  background: #fff;
+}
+
+.page-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.page-info {
+  color: #555;
+  font-size: 14px;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .main {
+    padding: 14px;
+  }
+}
+
+/* ── Top navigation bar — shared across all pages ── */
+.topnav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 48px;
+  padding: 0 20px;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.topnav-brand {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #222;
+  text-decoration: none;
+}
+
+.topnav-links {
+  display: flex;
+  gap: 4px;
+}
+
+.topnav-links a {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  color: #555;
+  text-decoration: none;
+  padding: 6px 14px;
+  border-radius: 4px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.topnav-links a:hover {
+  background: #f0f5ff;
+  color: #1f4fbf;
+}
+
+.topnav-links a.topnav-active {
+  background: #eef3ff;
+  color: #1f4fbf;
+  font-weight: 600;
+  border: 1px solid #d9e4ff;
+}
+
+/* Adjust layout height when nav is present */
+body .layout {
+  min-height: calc(100vh - 48px);
+}
+
+/* ── Insights-page-specific styles ── */
+.insights-main {
+  flex: 1;
+  padding: 20px;
+}
+
+.insights-header {
+  margin-bottom: 20px;
+}
+
+.insights-title {
+  margin: 0 0 4px;
+  font-size: 24px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+}
+
+.insights-sub {
+  color: #555;
+  font-size: 14px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Loading / error state reuse existing .empty-state style */
+.insights-loading {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fff;
+  padding: 24px;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.insights-error {
+  border: 1px solid #f5c6cb;
+  border-radius: 6px;
+  background: #fff5f5;
+  padding: 16px 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  color: #a33;
+  margin-bottom: 20px;
+  display: none;
+}
+
+/* Card wrapping each chart */
+.insight-card {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fff;
+  margin-bottom: 28px;
+  overflow: hidden;
+}
+
+.insight-card-header {
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid #eee;
+  background: #f3f4f6;
+}
+
+.insight-card-title {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.insight-card-desc {
+  margin: 0;
+  font-size: 13px;
+  color: #555;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.5;
+}
+
+.insight-card-controls {
+  padding: 12px 20px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  background: #fafafa;
+}
+
+.insight-card-controls label {
+  font-size: 13px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #333;
+  font-weight: 600;
+}
+
+.insight-card-controls select,
+.insight-card-controls input[type="text"] {
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  padding: 5px 8px;
+  font-size: 13px;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #fff;
+}
+
+.insight-card-controls .btn-filter {
+  border: 1px solid #3367d6;
+  background: #3367d6;
+  color: #fff;
+  border-radius: 4px;
+  padding: 5px 12px;
+  font-size: 13px;
+  font-family: Arial, Helvetica, sans-serif;
+  cursor: pointer;
+}
+
+.insight-card-controls .btn-filter:hover {
+  background: #2955b8;
+}
+
+.insight-card-controls .btn-ghost-sm {
+  border: 1px solid #bbb;
+  background: #fff;
+  color: #333;
+  border-radius: 4px;
+  padding: 5px 12px;
+  font-size: 13px;
+  font-family: Arial, Helvetica, sans-serif;
+  cursor: pointer;
+}
+
+.chart-container {
+  padding: 20px;
+  position: relative;
+  overflow-x: auto;
+}
+
+.chart-canvas-wrap {
+  position: relative;
+  min-height: 300px;
+}
+
+/* Overlay shown while loading chart data */
+.chart-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  border-radius: 4px;
+}
+
+.chart-overlay.hidden {
+  display: none;
+}
+
+/* Stat chips below chart 1 */
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #eef3ff;
+  border: 1px solid #d9e4ff;
+  color: #1f4fbf;
+}
+
+.chip-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* No-data notice */
+.no-data-notice {
+  text-align: center;
+  padding: 32px;
+  color: #666;
+  font-size: 14px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* END AI-GENERATED CODE */

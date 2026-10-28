@@ -1,0 +1,115 @@
+<!-- BEGIN AI-GENERATED CODE: AI was used to help draft and debug the HTML structure for the frontend application, including layout, components, and responsive design. -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Course Explorer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- Nav Bar -->
+  <nav class="topnav">
+    <a class="topnav-brand" href="index.html">Course Explorer</a>
+    <div class="topnav-links">
+      <a href="index.html" class="topnav-active">Course Search</a>
+      <a href="insights.html">Data Insights</a>
+    </div>
+  </nav>
+  <div class="layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-title">Course Explorer</div>
+      </div>
+
+      <!-- Filters Section -->
+      <section class="panel" id="filters-panel">
+        <h2 class="panel-title">Filters</h2>
+
+        <div class="field-group">
+          <label class="field-label">Departments</label>
+          <select id="dept-select" class="field-input dept-select" multiple size="6"></select>
+          <div class="dept-hint">Hold Cmd/Ctrl to select multiple</div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">Year Range</label>
+          <div class="range-row">
+            <input type="number" id="year-from" class="field-input year-input" placeholder="2010" min="1900"
+              max="2100" />
+            <span class="range-sep">–</span>
+            <input type="number" id="year-to" class="field-input year-input" placeholder="2024" min="1900" max="2100" />
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">Instructor</label>
+          <input type="text" id="instructor-input" class="field-input" placeholder="Partial name match" />
+        </div>
+
+        <button class="btn-primary" id="search-btn">Search</button>
+        <button class="btn-ghost" id="clear-btn">Clear Filters</button>
+      </section>
+    </aside>
+
+    <!-- Main content -->
+    <main class="main">
+      <header class="main-header">
+        <div>
+          <h1 class="main-title">Course Offerings</h1>
+          <div class="result-count" id="result-count">No data loaded</div>
+        </div>
+        <div class="sort-info" id="sort-info" style="display:none">
+          Sorted by <span id="sort-field-label"></span>
+          <span id="sort-dir-indicator"></span>
+        </div>
+      </header>
+
+      <!-- Empty state -->
+      <div class="empty-state" id="empty-state">
+        <div class="empty-title">No courses loaded</div>
+        <div class="empty-sub">Upload a dataset to begin exploring course offerings</div>
+      </div>
+
+      <!-- Loading state -->
+      <div class="loading-state" id="loading-state" style="display:none">
+        <div class="spinner"></div>
+        <div class="loading-text">Searching…</div>
+      </div>
+
+      <!-- Table -->
+      <div class="table-wrap" id="table-wrap" style="display:none">
+        <table class="data-table" id="data-table">
+          <thead>
+            <tr>
+              <th class="sortable" data-field="dept">Dept <span class="sort-arrow"></span></th>
+              <th class="sortable" data-field="code">Code <span class="sort-arrow"></span></th>
+              <th class="sortable" data-field="title">Title <span class="sort-arrow"></span></th>
+              <th class="sortable" data-field="year">Year <span class="sort-arrow"></span></th>
+              <th class="sortable" data-field="instructor">Instructor <span class="sort-arrow"></span></th>
+              <th class="sortable" data-field="avg">Avg <span class="sort-arrow"></span></th>
+            </tr>
+          </thead>
+          <tbody id="table-body"></tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination" id="pagination" style="display:none">
+        <button class="page-btn" id="prev-btn" disabled>← Prev</button>
+        <span class="page-info" id="page-info"></span>
+        <button class="page-btn" id="next-btn">Next →</button>
+      </div>
+    </main>
+  </div>
+
+  <script src="frontend.js"></script>
+</body>
+
+</html>
+
+<!-- END AI-GENERATED CODE -->

@@ -1,0 +1,645 @@
+<!-- BEGIN AI-GENERATED CODE: AI was used to help draft and debug the HTML structure for the insights visualization page for both courses offerings and facilitis. -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Insights — Course Explorer</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <nav class="topnav">
+        <a class="topnav-brand" href="index.html">Course Explorer</a>
+        <div class="topnav-links">
+            <a href="index.html">Course Search</a>
+            <a href="insights.html" class="topnav-active">Data Insights</a>
+        </div>
+    </nav>
+
+    <!-- Full-width single-column layout — no sidebar -->
+    <div style="padding: 24px 32px; max-width: 1200px; margin: 0 auto;">
+
+        <div class="insights-header">
+            <h1 class="insights-title">Data Insights</h1>
+            <div class="insights-sub">Facilities and course enrollment visualizations for campus planning and academic decisions</div>
+        </div>
+
+        <!-- Summary strip -->
+        <div class="stats-grid" id="summary-strip"
+            style="grid-template-columns:repeat(4,1fr);margin-bottom:28px;display:grid;">
+            <div class="stat-card">
+                <div class="stat-value" id="sum-buildings">—</div>
+                <div class="stat-name">Buildings</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="sum-rooms">—</div>
+                <div class="stat-name">Total Rooms</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="sum-seats">—</div>
+                <div class="stat-name">Total Seats</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="sum-types">—</div>
+                <div class="stat-name">Room Types</div>
+            </div>
+        </div>
+
+        <div class="insights-error" id="global-error"></div>
+
+        <!-- ── Insight 1: Room Type Distribution ── -->
+        <div class="insight-card">
+            <div class="insight-card-header">
+                <h2 class="insight-card-title">Room Type Distribution Across Campus</h2>
+                <p class="insight-card-desc">
+                    Number of rooms of each type across all buildings. Helps faculty and schedulers find buildings
+                    with the right room configuration, and identifies imbalances to guide future infrastructure
+                    planning.
+                </p>
+            </div>
+            <div class="insight-card-controls">
+                <label for="type-building-filter">Filter by building:</label>
+                <select id="type-building-filter">
+                    <option value="">All Buildings</option>
+                </select>
+                <button class="btn-ghost-sm" id="type-reset-btn">Reset</button>
+            </div>
+            <div class="chart-container">
+                <div class="chart-canvas-wrap" style="height:360px;">
+                    <div class="chart-overlay" id="chart1-overlay">
+                        <div class="spinner"></div>
+                    </div>
+                    <canvas id="chart1"></canvas>
+                </div>
+                <div class="chip-row" id="type-chips"></div>
+            </div>
+        </div>
+
+        <!-- Insight 2: Room Size Distribution by Building -->
+        <div class="insight-card">
+            <div class="insight-card-header">
+                <h2 class="insight-card-title">Room Size Distribution by Building</h2>
+                <p class="insight-card-desc">
+                    Number of small (≤40 seats), medium (41–100 seats), and large (100+ seats) rooms per building.
+                    Helps course schedulers identify mismatches between room capacity and course enrollment needs,
+                    improving scheduling efficiency and space utilization.
+                </p>
+            </div>
+            <div class="insight-card-controls">
+                <label for="size-sort-select">Sort by:</label>
+                <select id="size-sort-select">
+                    <option value="total">Total rooms</option>
+                    <option value="large">Large rooms</option>
+                    <option value="alpha">Building name (A–Z)</option>
+                </select>
+                <label for="size-search" style="margin-left:8px;">Search:</label>
+                <input type="text" id="size-search" placeholder="Building name…" style="width:160px;" />
+                <button class="btn-filter" id="size-apply-btn">Apply</button>
+                <button class="btn-ghost-sm" id="size-reset-btn">Reset</button>
+            </div>
+            <div class="chart-container" style="overflow-x:auto;">
+                <div class="chart-canvas-wrap" id="chart2-wrap" style="height:380px;min-width:600px;">
+                    <div class="chart-overlay" id="chart2-overlay">
+                        <div class="spinner"></div>
+                    </div>
+                    <canvas id="chart2"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Insight 3: Course Enrollment Trends Over Time -->
+        <div class="insight-card">
+            <div class="insight-card-header">
+                <h2 class="insight-card-title">Course Enrollment Trends Over Time</h2>
+                <p class="insight-card-desc">
+                    Track enrollment patterns across years for specific courses or departments. Helps administrators
+                    identify growing demand for courses, plan faculty hiring, allocate classroom resources, and
+                    inform strategic curriculum decisions based on student interest trends.
+                </p>
+            </div>
+            <div class="insight-card-controls">
+                <label for="enrollment-dept-filter">Department:</label>
+                <select id="enrollment-dept-filter">
+                    <option value="">All Departments</option>
+                </select>
+                <label for="enrollment-course-select" style="margin-left:12px;">Courses to show (hold Cmd/Ctrl for multi-select):</label>
+                <select id="enrollment-course-select" multiple size="10" style="width:320px;">
+                </select>
+                <button class="btn-filter" id="enrollment-apply-btn">Update Chart</button>
+                <button class="btn-ghost-sm" id="enrollment-reset-btn">Reset</button>
+            </div>
+            <div class="chart-container">
+                <div style="margin-bottom:12px;font-size:13px;color:#666;font-family:Arial;">
+                    <strong>Tip:</strong> By default, shows the 10 courses with the highest average student enrollment across the years they were offered. Select a department to filter, or choose specific courses to compare trends.
+                </div>
+                <div class="chart-canvas-wrap" style="height:400px;">
+                    <div class="chart-overlay" id="chart3-overlay">
+                        <div class="spinner"></div>
+                    </div>
+                    <canvas id="chart3"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- end page content -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+    <script>
+        /* BEGIN AI-GENERATED CODE: AI assisted with chart logic and data aggregation for the insights page. */
+        const API = '';
+
+        let allRooms = [];
+        let buildingStats = [];
+        let allSections = [];
+        let chart1Instance = null;
+        let chart2Instance = null;
+        let chart3Instance = null;
+
+        async function fetchFacilitiesData() {
+            const body = {
+                kind: 'facilities',
+                query: {
+                    WHERE: {},
+                    OPTIONS: { COLUMNS: ['name', 'building', 'number', 'type', 'seats'] }
+                }
+            };
+            const res = await fetch(`${API}/api/v2/search`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
+            });
+            if (!res.ok) throw new Error(`Search failed (${res.status}): ${await res.text()}`);
+            return res.json();
+        }
+
+        function aggregateByBuilding(rooms) {
+            const map = new Map();
+            for (const r of rooms) {
+                if (!map.has(r.name)) map.set(r.name, { name: r.name, total: 0, small: 0, medium: 0, large: 0 });
+                const b = map.get(r.name);
+                b.total++;
+                if (r.seats <= 40) b.small++;
+                else if (r.seats <= 100) b.medium++;
+                else b.large++;
+            }
+            return Array.from(map.values());
+        }
+
+        function aggregateByType(rooms) {
+            const map = new Map();
+            for (const r of rooms) {
+                const key = (r.type && r.type.trim()) ? r.type.trim() : 'Unspecified';
+                map.set(key, (map.get(key) || 0) + 1);
+            }
+            return Array.from(map.entries())
+                .map(([type, count]) => ({ type, count }))
+                .sort((a, b) => b.count - a.count);
+        }
+
+        function buildChart1(rooms) {
+            const data = aggregateByType(rooms);
+            if (data.length === 0) {
+                document.getElementById('chart1-overlay').innerHTML =
+                    '<p style="font-size:14px;color:#666;font-family:Arial;">No room type data available.</p>';
+                return;
+            }
+
+            const palette = ['#3367d6', '#4a73d9', '#1f4fbf', '#2a7de1', '#6a94e8', '#1a3fa0', '#8aadf0', '#0d2b7a', '#b0c6f8', '#5580d4'];
+            const colors = data.map((_, i) => palette[i % palette.length]);
+            const ctx = document.getElementById('chart1').getContext('2d');
+            if (chart1Instance) chart1Instance.destroy();
+
+            chart1Instance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.map(d => d.type),
+                    datasets: [{
+                        label: 'Number of Rooms',
+                        data: data.map(d => d.count),
+                        backgroundColor: colors.map(c => c + 'cc'),
+                        borderColor: colors,
+                        borderWidth: 1,
+                        borderRadius: 3,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                title: items => items[0].label,
+                                label: item => ` ${item.raw} room${item.raw !== 1 ? 's' : ''}`
+                            }
+                        }
+                    },
+                    scales: {
+                        x: { ticks: { font: { size: 11, family: 'Arial' }, maxRotation: 40, minRotation: 20 }, grid: { display: false } },
+                        y: {
+                            beginAtZero: true, ticks: { font: { size: 11, family: 'Arial' }, stepSize: 1 },
+                            title: { display: true, text: 'Number of Rooms', font: { size: 12, family: 'Arial' }, color: '#555' }
+                        }
+                    }
+                }
+            });
+
+            const chipsEl = document.getElementById('type-chips');
+            chipsEl.innerHTML = '';
+            data.slice(0, 8).forEach((d, i) => {
+                const chip = document.createElement('div');
+                chip.className = 'chip';
+                chip.innerHTML = `<span class="chip-dot" style="background:${colors[i % colors.length]}"></span>${d.type} <strong style="margin-left:2px;">${d.count}</strong>`;
+                chipsEl.appendChild(chip);
+            });
+
+            document.getElementById('chart1-overlay').classList.add('hidden');
+        }
+
+        function populateBuildingFilter(buildings) {
+            const sel = document.getElementById('type-building-filter');
+            sel.innerHTML = '<option value="">All Buildings</option>';
+            [...buildings].sort((a, b) => a.name.localeCompare(b.name)).forEach(b => {
+                const opt = document.createElement('option');
+                opt.value = b.name;
+                opt.textContent = b.name;
+                sel.appendChild(opt);
+            });
+        }
+
+        document.getElementById('type-building-filter').addEventListener('change', function () {
+            const val = this.value;
+            buildChart1(val ? allRooms.filter(r => r.name === val) : allRooms);
+        });
+        document.getElementById('type-reset-btn').addEventListener('click', () => {
+            document.getElementById('type-building-filter').value = '';
+            buildChart1(allRooms);
+        });
+
+        function buildChart2(data) {
+            if (data.length === 0) {
+                document.getElementById('chart2-overlay').innerHTML =
+                    '<p style="font-size:14px;color:#666;font-family:Arial;">No building data available.</p>';
+                return;
+            }
+            const minW = Math.max(600, data.length * 36);
+            document.getElementById('chart2-wrap').style.minWidth = minW + 'px';
+
+            const ctx = document.getElementById('chart2').getContext('2d');
+            if (chart2Instance) chart2Instance.destroy();
+
+            chart2Instance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.map(b => b.name),
+                    datasets: [
+                        { label: 'Large (100+ seats)', data: data.map(b => b.large), backgroundColor: '#3367d6cc', borderColor: '#3367d6', borderWidth: 1, borderRadius: 2 },
+                        { label: 'Medium (41–100 seats)', data: data.map(b => b.medium), backgroundColor: '#4a73d9aa', borderColor: '#4a73d9', borderWidth: 1 },
+                        { label: 'Small (≤40 seats)', data: data.map(b => b.small), backgroundColor: '#b0c6f8aa', borderColor: '#8aadf0', borderWidth: 1 }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: true, labels: { font: { size: 12, family: 'Arial' }, padding: 16, boxWidth: 14 } },
+                        tooltip: {
+                            callbacks: {
+                                title: items => items[0].label,
+                                afterBody: items => [`Total rooms: ${data[items[0].dataIndex].total}`]
+                            }
+                        }
+                    },
+                    scales: {
+                        x: { stacked: true, ticks: { font: { size: 10, family: 'Arial' }, maxRotation: 55, minRotation: 45 }, grid: { display: false } },
+                        y: {
+                            stacked: true, beginAtZero: true, ticks: { font: { size: 11, family: 'Arial' }, stepSize: 1 },
+                            title: { display: true, text: 'Number of Rooms', font: { size: 12, family: 'Arial' }, color: '#555' }
+                        }
+                    }
+                }
+            });
+
+            document.getElementById('chart2-overlay').classList.add('hidden');
+        }
+
+        function applyChart2Filters() {
+            const sortMode = document.getElementById('size-sort-select').value;
+            const searchVal = document.getElementById('size-search').value.trim().toLowerCase();
+            let data = [...buildingStats];
+            if (searchVal) data = data.filter(b => b.name.toLowerCase().includes(searchVal));
+            if (sortMode === 'large') data.sort((a, b) => b.large - a.large);
+            else if (sortMode === 'alpha') data.sort((a, b) => a.name.localeCompare(b.name));
+            else data.sort((a, b) => b.total - a.total);
+            buildChart2(data);
+        }
+
+        document.getElementById('size-apply-btn').addEventListener('click', applyChart2Filters);
+        document.getElementById('size-sort-select').addEventListener('change', applyChart2Filters);
+        document.getElementById('size-search').addEventListener('keydown', e => { if (e.key === 'Enter') applyChart2Filters(); });
+        document.getElementById('size-reset-btn').addEventListener('click', () => {
+            document.getElementById('size-sort-select').value = 'total';
+            document.getElementById('size-search').value = '';
+            buildChart2([...buildingStats].sort((a, b) => b.total - a.total));
+        });
+
+        // ─── Course Enrollment Functions ───────────────────────────────────────────
+
+        async function fetchCourseOfferingsData() {
+            const body = {
+                kind: 'course_offerings',
+                query: {
+                    WHERE: {},
+                    OPTIONS: { COLUMNS: ['dept', 'code', 'title', 'year', 'pass', 'fail', 'audit'] }
+                }
+            };
+            const res = await fetch(`${API}/api/v2/search`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
+            });
+            if (!res.ok) throw new Error(`Search failed (${res.status}): ${await res.text()}`);
+            return res.json();
+        }
+
+        function aggregateEnrollmentByYear(sections) {
+            // Group by course (dept + code), then by year
+            const courseMap = new Map();
+            
+            for (const section of sections) {
+                // Skip "Overall" sections (year 1900)
+                if (section.year === 1900) continue;
+                
+                const courseKey = `${section.dept} ${section.code}`;
+                if (!courseMap.has(courseKey)) {
+                    courseMap.set(courseKey, {
+                        dept: section.dept,
+                        code: section.code,
+                        title: section.title || '',
+                        yearData: new Map()
+                    });
+                }
+                
+                const course = courseMap.get(courseKey);
+                const year = section.year;
+                const enrollment = section.pass + section.fail + section.audit;
+                
+                course.yearData.set(year, (course.yearData.get(year) || 0) + enrollment);
+            }
+            
+            return courseMap;
+        }
+
+        function populateEnrollmentFilters(courseMap) {
+            // Populate department filter
+            const depts = new Set();
+            for (const [_, course] of courseMap) {
+                depts.add(course.dept);
+            }
+            
+            const deptSelect = document.getElementById('enrollment-dept-filter');
+            deptSelect.innerHTML = '<option value="">All Departments</option>';
+            [...depts].sort().forEach(dept => {
+                const opt = document.createElement('option');
+                opt.value = dept;
+                opt.textContent = dept;
+                deptSelect.appendChild(opt);
+            });
+            
+            // Populate course select with top 10 courses by total enrollment
+            updateCourseSelect('');
+        }
+
+        function updateCourseSelect(deptFilter) {
+            const courseMap = aggregateEnrollmentByYear(allSections);
+            const courses = [];
+            
+            for (const [courseKey, course] of courseMap) {
+                if (deptFilter && course.dept !== deptFilter) continue;
+                
+                const totalEnrollment = Array.from(course.yearData.values()).reduce((sum, e) => sum + e, 0);
+                const numYears = course.yearData.size;
+                const avgEnrollmentPerYear = totalEnrollment / numYears;
+                const years = Array.from(course.yearData.keys());
+                const mostRecentYear = Math.max(...years);
+                const has2016Data = course.yearData.has(2016);
+                
+                courses.push({
+                    key: courseKey,
+                    dept: course.dept,
+                    code: course.code,
+                    title: course.title,
+                    totalEnrollment,
+                    avgEnrollmentPerYear,
+                    mostRecentYear,
+                    has2016Data
+                });
+            }
+            
+            // Sort by average enrollment per year (descending) to show consistently popular courses
+            courses.sort((a, b) => b.avgEnrollmentPerYear - a.avgEnrollmentPerYear);
+            
+            // Show all courses regardless of filter
+            const topCourses = courses;
+            
+            const courseSelect = document.getElementById('enrollment-course-select');
+            courseSelect.innerHTML = '';
+            courseSelect.size = Math.min(10, topCourses.length);
+            
+            topCourses.forEach(course => {
+                const opt = document.createElement('option');
+                opt.value = course.key;
+                opt.textContent = course.key;
+                courseSelect.appendChild(opt);
+            });
+            
+            // Select top 10 by default (courses with highest average enrollment per year)
+            for (let i = 0; i < Math.min(10, courseSelect.options.length); i++) {
+                courseSelect.options[i].selected = true;
+            }
+        }
+
+        function buildChart3(selectedCourses) {
+            if (selectedCourses.length === 0) {
+                document.getElementById('chart3-overlay').innerHTML =
+                    '<p style="font-size:14px;color:#666;font-family:Arial;">Select courses to view enrollment trends.</p>';
+                return;
+            }
+
+            const courseMap = aggregateEnrollmentByYear(allSections);
+            
+            // Get all years
+            const allYears = new Set();
+            for (const [_, course] of courseMap) {
+                for (const year of course.yearData.keys()) {
+                    allYears.add(year);
+                }
+            }
+            const years = Array.from(allYears).sort((a, b) => a - b);
+            
+            // Build datasets
+            const colors = [
+                '#3367d6', '#e94235', '#34a853', '#fbbc04', '#ff6d00',
+                '#9c27b0', '#00897b', '#d81b60', '#1e88e5', '#7cb342'
+            ];
+            
+            const datasets = selectedCourses.map((courseKey, idx) => {
+                const course = courseMap.get(courseKey);
+                if (!course) return null;
+                
+                const data = years.map(year => course.yearData.get(year) || 0);
+                
+                return {
+                    label: courseKey,
+                    data: data,
+                    borderColor: colors[idx % colors.length],
+                    backgroundColor: colors[idx % colors.length] + '33',
+                    borderWidth: 2,
+                    tension: 0.3,
+                    pointRadius: 4,
+                    pointHoverRadius: 6
+                };
+            }).filter(ds => ds !== null);
+
+            const ctx = document.getElementById('chart3').getContext('2d');
+            if (chart3Instance) chart3Instance.destroy();
+
+            chart3Instance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: years,
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            labels: { font: { size: 11, family: 'Arial' }, padding: 12, boxWidth: 12 }
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            callbacks: {
+                                title: items => `Year: ${items[0].label}`,
+                                label: item => ` ${item.dataset.label}: ${item.raw.toLocaleString()} students`
+                            }
+                        }
+                    },
+                    interaction: {
+                        mode: 'nearest',
+                        axis: 'x',
+                        intersect: false
+                    },
+                    scales: {
+                        x: {
+                            title: { display: true, text: 'Year', font: { size: 12, family: 'Arial' }, color: '#555' },
+                            ticks: { font: { size: 11, family: 'Arial' } }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Total Students Enrolled', font: { size: 12, family: 'Arial' }, color: '#555' },
+                            ticks: { font: { size: 11, family: 'Arial' } }
+                        }
+                    }
+                }
+            });
+
+            document.getElementById('chart3-overlay').classList.add('hidden');
+        }
+
+        document.getElementById('enrollment-dept-filter').addEventListener('change', function () {
+            updateCourseSelect(this.value);
+        });
+
+        document.getElementById('enrollment-apply-btn').addEventListener('click', () => {
+            const courseSelect = document.getElementById('enrollment-course-select');
+            const selected = Array.from(courseSelect.selectedOptions).map(opt => opt.value);
+            buildChart3(selected);
+        });
+
+        document.getElementById('enrollment-reset-btn').addEventListener('click', () => {
+            document.getElementById('enrollment-dept-filter').value = '';
+            updateCourseSelect('');
+            const courseSelect = document.getElementById('enrollment-course-select');
+            const selected = Array.from(courseSelect.selectedOptions).slice(0, 10).map(opt => opt.value);
+            buildChart3(selected);
+        });
+
+        // ────────────────────────────────────────────────────────────────────────────
+
+        function updateSummary(rooms, buildings) {
+            const totalSeats = rooms.reduce((s, r) => s + r.seats, 0);
+            const types = new Set(rooms.map(r => (r.type && r.type.trim()) ? r.type.trim() : 'Unspecified'));
+            document.getElementById('sum-buildings').textContent = buildings.length;
+            document.getElementById('sum-rooms').textContent = rooms.length.toLocaleString();
+            document.getElementById('sum-seats').textContent = totalSeats.toLocaleString();
+            document.getElementById('sum-types').textContent = types.size;
+        }
+
+        async function init() {
+            try {
+                // Fetch both facilities and course offerings data in parallel
+                const [rooms, sections] = await Promise.all([
+                    fetchFacilitiesData().catch(() => []),
+                    fetchCourseOfferingsData().catch(() => [])
+                ]);
+
+                allRooms = rooms;
+                allSections = sections;
+
+                // Initialize facilities charts
+                if (allRooms.length === 0) {
+                    ['chart1-overlay', 'chart2-overlay'].forEach(id => {
+                        document.getElementById(id).innerHTML =
+                            '<p style="font-size:14px;color:#666;font-family:Arial;">No facilities data — upload campus.zip first.</p>';
+                    });
+                } else {
+                    buildingStats = aggregateByBuilding(allRooms);
+                    updateSummary(allRooms, buildingStats);
+                    populateBuildingFilter(buildingStats);
+                    buildChart1(allRooms);
+                    buildChart2([...buildingStats].sort((a, b) => b.total - a.total));
+                }
+
+                // Initialize course enrollment chart
+                if (allSections.length === 0) {
+                    document.getElementById('chart3-overlay').innerHTML =
+                        '<p style="font-size:14px;color:#666;font-family:Arial;">No course data — upload pair.zip first.</p>';
+                } else {
+                    populateEnrollmentFilters(aggregateEnrollmentByYear(allSections));
+                    const courseSelect = document.getElementById('enrollment-course-select');
+                    const defaultSelected = Array.from(courseSelect.selectedOptions).map(opt => opt.value);
+                    buildChart3(defaultSelected);
+                }
+
+                // Show global error only if both datasets are missing
+                if (allRooms.length === 0 && allSections.length === 0) {
+                    const errEl = document.getElementById('global-error');
+                    errEl.style.display = 'block';
+                    errEl.textContent = 'No data found. Upload datasets (campus.zip and/or pair.zip) first.';
+                }
+
+            } catch (err) {
+                const errEl = document.getElementById('global-error');
+                errEl.style.display = 'block';
+                errEl.textContent = `Could not load data: ${err.message}. Make sure the backend is running.`;
+                ['chart1-overlay', 'chart2-overlay', 'chart3-overlay'].forEach(id => {
+                    document.getElementById(id).innerHTML =
+                        `<p style="font-size:13px;color:#a33;font-family:Arial;">${err.message}</p>`;
+                });
+            }
+        }
+
+        init();
+        /* END AI-GENERATED CODE */
+    </script>
+</body>
+
+</html>
+<!-- END AI-GENERATED CODE -->

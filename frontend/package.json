@@ -1,0 +1,8 @@
+{
+  "name": "course-explorer-frontend",
+  "version": "1.0.0",
+  "description": "Course Explorer frontend for InsightUBC",
+  "scripts": {
+    "demo": "yarn --cwd .. start"
+  }
+}
